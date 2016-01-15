@@ -17,8 +17,6 @@
 \details{
 This function prints a detailed summary of the analyses produced by
 the \code{\link{BDA}} function.
-
-The summary is threefold.fj
 }
 \examples{
 results <- BDA(data = FFfactors, spec = (MDLRX~Mkt.RF + SMB + HML + RMW + CMA),

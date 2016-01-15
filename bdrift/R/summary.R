@@ -7,8 +7,6 @@
 #' This function prints a detailed summary of the analyses produced by
 #' the \code{\link{BDA}} function.
 #'
-#' The summary is threefold.
-#'
 #' @param object an object of class \code{BDA}.
 #' @param ... additional parameters.
 #' @method summary BDA
