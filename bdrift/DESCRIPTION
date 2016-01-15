@@ -8,7 +8,13 @@ Authors@R: person("Markus Peter", "Auer", role = c("aut", "cre"),
 Author: Markus Peter Auer
 Maintainer: Markus Peter Auer <mp.auer@meanerreversion.com>
 Description: This package contains the BDA() function that performs a beta drift
-    analysis, typically for multi-factor asset pricing models. XXX
+    analysis, typically for multi-factor asset pricing models. The BDA() function
+    tests the underlying model parameters for drift across time, drift across
+    model horizon, and applies a jackknife procedure to the baseline model. This 
+    allows the users to draw conclusions about the stability of model parameters 
+    or make inferences about the behavior funds. The drift of parameters for active 
+    funds could be interpreted as a style drift or lack of management skill in the 
+    case of passive funds.
 Depends:
     R (>= 3.1.0),
     xts,
