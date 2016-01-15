@@ -1,8 +1,8 @@
 Package: bdrift
 Type: Package
 Title: Beta drift analysis
-Version: 1.03
-Date: 2016-01-14
+Version: 1.05
+Date: 2016-01-16
 Authors@R: person("Markus Peter", "Auer", role = c("aut", "cre"),
                      email = "mp.auer@meanerreversion.com")
 Author: Markus Peter Auer
@@ -15,7 +15,8 @@ Depends:
     zoo
 Imports:
     scales,
-    tcltk
+    tcltk,
+    tcltk2
 Suggests: quantmod
 License: GPL-3
 LazyData: yes

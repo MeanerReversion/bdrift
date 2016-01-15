@@ -99,23 +99,61 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
   max.hor <- ifelse(max.hor>nrow(data), nrow(data), max.hor)
   hdrift <- matrix(0, nrow = max.hor - min.hor+1, ncol = k)
   hdrift.se <- matrix(0, nrow = max.hor - min.hor+1, ncol = k)
-  coefs <- base.model$coef[1:k]
+  coef <- base.model$coef[1:k]
   se <- sqrt(diag(vcov(base.model)))[1:k]
-  header <- c(names(coefs[1:k]))
+  header <- c(names(coef[1:k]))
+  
+  root <- tcltk::tktoplevel()
+  tcltk::tktitle(root) <- "BDA function progress"
+  l1 <- tcltk2::tk2label(root,"Function Progress...")
+  pb1 <- tcltk2::tk2progress(root, length = 600)
+  tcltk::tkconfigure(pb1, value=0, maximum=N)
+  
+  l2 <- tcltk2::tk2label(root, "Function Progress...")
+  pb2 <- tcltk2::tk2progress(root, length = 600)
+  tcltk::tkconfigure(pb2, value=0, maximum = max.hor-min.hor+1)
+  
+  l3 <- tcltk2::tk2label(root, "Function Progress...")
+  pb3 <- tcltk2::tk2progress(root, length = 600)
+  tcltk::tkconfigure(pb3, value=0, maximum = 100)
+  
+  l4 <- tcltk2::tk2label(root, "Function Progress...")
+  pb4 <- tcltk2::tk2progress(root, length = 600)
+  tcltk::tkconfigure(pb4, value=0, maximum = 100)
+  
+  tcltk::tkpack(l1)
+  tcltk::tkpack(pb1)
+  tcltk::tkpack(l2)
+  tcltk::tkpack(pb2)
+  tcltk::tkpack(l3)
+  tcltk::tkpack(pb3)
+  tcltk::tkpack(l4)
+  tcltk::tkpack(pb4)
+  
+  tcltk::tcl("update")
+  tcltk::tkconfigure(l1, text = paste("Time drift estimation 0% done"))
+  tcltk::tkconfigure(pb1, value = 0)
+  tcltk::tkconfigure(l2, text = paste("Horizon drift estimation 0% done"))
+  tcltk::tkconfigure(pb2, value = 0)
+  tcltk::tkconfigure(l3, text = paste("Jackknife procedure 0% done"))
+  tcltk::tkconfigure(pb3, value = 0)
+  tcltk::tkconfigure(l4, text = paste("Finalizing procedures"))
+  tcltk::tkconfigure(pb4, value = 0)
+  tcltk::tcl("update")
 
   ###################################################
   ####              Beta Drift                   ####
   ###################################################
-  pb1 <- tcltk::tkProgressBar(title = "Step 1/4 - Estimating Beta Drift", min = 0,
-                       max = N, width = 300)
+ 
   for (i in 1:N)
   {
     tdrift.model <- glm(spec, data = data[i:(horizon+i-1),], family = family, ...)
     tdrift[i,] <- tdrift.model$coef[1:k]
     tdrift.se[i,] <- sqrt(diag(vcov(tdrift.model)))[1:k]
-    tcltk::setTkProgressBar(pb1, i, label=paste( round(i/N*100, 0), "% done"))
+    tcltk::tkconfigure(l1, text = paste("Time drift estimation ",round(i/N*100, 0), "% done"))
+    tcltk::tkconfigure(pb1, value = i)
+    tcltk::tcl("update")
   }
-  close(pb1)
   colnames(tdrift) <- header[1:k]
   tdrift <- as.data.frame(tdrift)
   tdrift <- tdrift[rev(rownames(tdrift)),]
@@ -128,41 +166,45 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
   ###################################################
   ####            Testing Range                  ####
   ###################################################
-  pb2 <- tcltk::tkProgressBar(title = "Step 2/4 - Testing Range", min = 0,
-                       max = max.hor-min.hor+1, width = 300)
   for (m in min.hor:max.hor)
   {
     hdrift[(m +1 - min.hor),] <- glm(spec, data = data[1:m,],
                                     family= family, ...)$coef[1:k]
     hdrift.se[(m +1 - min.hor),] <- sqrt(diag(vcov(glm(spec, data = data[1:m,],
                                                      family= family, ...))))[1:k]
-    tcltk::setTkProgressBar(pb2, m,
-                     label=paste( round((m-min.hor+1)/
-                                          (max.hor-min.hor+1)*100, 0), "% done"))
+    tcltk::tkconfigure(l2, 
+                       text = paste("Horizon drift estimation ", 
+                                    round((m-min.hor+1)/(max.hor-min.hor+1)*100, 0),
+                                    "% done"))
+    tcltk::tkconfigure(pb2, value = m)
+    tcltk::tcl("update")
   }
   rownames(hdrift) <- c(min.hor:max.hor)
   colnames(hdrift) <- header[1:k]
   rownames(hdrift.se) <- c(min.hor:max.hor)
   colnames(hdrift.se) <- header[1:k]
-  close(pb2)
 
   ###################################################
   ####                Jackknife                  ####
   ###################################################
-  pb3 <- tcltk::tkProgressBar(title = "Step 3/4 - Using Jackknife Procedure", min = 0,
-                       max = 100, width = 300)
-  tcltk::setTkProgressBar(pb3, 0, label=paste(0, "% done"))
+  tcltk::tkconfigure(l3, text = paste("Jackknife procedure ",0, "% done"))
+  tcltk::tkconfigure(pb3, value = 0)
+  tcltk::tcl("update")
   jackknife <- lm.influence(base.model)
-  tcltk::setTkProgressBar(pb3, 100, label=paste(100, "% done"))
-  close(pb3)
-
-  pb4 <- tcltk::tkProgressBar(title = "Step 4/4 - Preparing Output", min = 0,
-                       max = 100, width = 300)
-
+  tcltk::tkconfigure(l3, text = paste("Jackknife procedure ",100, "% done"))
+  tcltk::tkconfigure(pb3, value = 100)
+  tcltk::tcl("update")
+  
   ###################################################
   ####            Summary Statistics             ####
   ###################################################
-  tcltk::setTkProgressBar(pb4, 30, label="preparing summary stats")
+  tcltk::tkconfigure(l4, text = "Preparing Output")
+  tcltk::tkconfigure(pb4, value = 0)
+  tcltk::tcl("update")
+  tcltk::tkconfigure(l4, text = "Preparing summary stats")
+  tcltk::tkconfigure(pb4, value = 30)
+  tcltk::tcl("update")
+  
   base.para <- matrix(0, nrow = 1, ncol = k)
   base.coef <- matrix(0, nrow = 1, ncol = k)
   base.se <- matrix(0, nrow = 1, ncol = k)
@@ -188,6 +230,8 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
   rownames(susp.date) <- rownames(jackknife$coefficients)
   colnames(notice.date) <- header[1:k]
   colnames(susp.date) <- header[1:k]
+  crit1 <- rep(0.75, k)
+  crit2 <- rep(0.5, k)
 
   for (z in (1:k)) {
     base.para[,z] <- base.model$coef[z]
@@ -212,52 +256,21 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
     hor.mean[, z] <- as.numeric(mean(hdrift[,z]))
     hor.sd[, z] <- as.numeric(sd(hdrift[,z]))
 
-    if (length(2*pt(abs(jackknife$coef[,z]/base.se[,z]),
-                     df = horizon-k, lower.tail = FALSE) < 0.75)!=0) {
-      notice.nr[,z] <- sum(abs(jackknife$coef[,z]) >
-                             qt(0.625, df = horizon-k) * base.se[,z])
-      notice.date[,z] <- ifelse(as.logical(abs(jackknife$coef[,z]) >
-                                             qt(0.625, df = horizon-k) * base.se[,z]),
-                                2*pt(abs(jackknife$coef[,z]/base.se[,z]),
-                                     df = horizon-k, lower.tail = FALSE),
-                                NA)
-    } else {
-      notice.nr[,z] <- 0
-    }
-    if (length(2*pt(abs(jackknife$coef[,z]/base.se[,z]),
-              df = horizon-k, lower.tail = FALSE) < 0.5)!=0) {
-      susp.nr[,z] <- sum(abs(jackknife$coef[,z]) >
-                           qt(0.75, df = horizon-k) * base.se[,z])
-      susp.date[,z] <- ifelse(as.logical(abs(jackknife$coef[,z]) >
-                                           qt(0.75, df = horizon-k) * base.se[,z]),
-                              2*pt(abs(jackknife$coef[,z]/base.se[,z]),
-                                   df = horizon-k, lower.tail = FALSE),
-                              NA)
-    } else {
-      susp.nr[,z] <- 0
-    }
+    notice.date[,z] <- 2*pt(abs(jackknife$coef[,z] / base.se[,z]),
+                                     df = horizon-k, lower.tail = FALSE)
+    susp.date[,z] <- 2*pt(abs(jackknife$coef[,z] / base.se[,z]),
+                                   df = horizon-k, lower.tail = FALSE)
+    notice.nr[,z] <- sum(as.numeric(notice.date[,z] <0.75))
+    susp.nr[,z] <- sum(as.numeric(susp.date[,z] <0.5))
   }
-
-  notice.date <- as.data.frame(notice.date[rowSums(is.na(notice.date))!=
-                                             ncol(notice.date), ])
-
-  susp.date <- as.data.frame(susp.date[rowSums(is.na(susp.date))!=ncol(susp.date), ])
-
-  for (w in 1:k) {
-    for (v in c(rownames(notice.date))){
-      notice.date[v, w] <- 2*pt(abs(jackknife$coef[v,w]/base.se[,w]),
-                                df = horizon-k, lower.tail = FALSE)
-    }
-  }
-
-  for (r in 1:k) {
-    for (s in c(rownames(susp.date))){
-      susp.date[s, r] <- 2*pt(abs(jackknife$coef[s,r]/base.se[,r]),
-                              df = horizon-k, lower.tail = FALSE)
-    }
-  }
+  notice.date <- as.data.frame(notice.date)
+  susp.date <- as.data.frame(susp.date)
   colnames(notice.date) <- header[1:k]
   colnames(susp.date) <- header[1:k]
+  notice.date <- notice.date[rowSums(mapply(`<`, notice.date, crit1)) > 0, ]
+  susp.date <- susp.date[rowSums(mapply(`<`, susp.date, crit2)) > 0, ]
+
+  
   starify <- function (y) {if (y < .001) {
     y <- "***"
   } else if (y < .01) {
@@ -291,7 +304,9 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
   ###################################################
   ####                Outputs                    ####
   ###################################################
-  tcltk::setTkProgressBar(pb4, 40, label="compiling output")
+  tcltk::tkconfigure(l4, text = "Compiling output")
+  tcltk::tkconfigure(pb4, value = 40)
+  tcltk::tcl("update")
   results <- list(CALL = match.call(),
                   base.model = base.model,
                   tdrift = tdrift,
@@ -305,8 +320,10 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
   ###################################################
   ####                Plotting                   ####
   ###################################################
-  tcltk::setTkProgressBar(pb4, 50, label="plotting")
   if (doplot == TRUE) {
+    tcltk::tkconfigure(l4, text = "Plotting")
+    tcltk::tkconfigure(pb4, value = 50)
+    tcltk::tcl("update")
     opar <- par(no.readonly = TRUE)
     for (j in (1:k))
     {
@@ -321,14 +338,14 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
            labels=c(start(tdrift[,j]), end(tdrift[,j])))
       polygon(c(zoo::index(as.numeric(tdrift[,j])),
                 rev(zoo::index(as.numeric(tdrift[,j])))),
-              c(c(rep((coefs[j]+qt(0.975, df = horizon)*se[j]),
+              c(c(rep((coef[j]+qt(0.975, df = horizon)*se[j]),
                       length(zoo::index(as.numeric(tdrift[,j]))))),
-                c(rep((coefs[j]-qt(0.975, df = horizon)*se[j]),
+                c(rep((coef[j]-qt(0.975, df = horizon)*se[j]),
                       length(zoo::index(as.numeric(tdrift[,j])))))),
               col = scales::alpha("red", 0.15), border = FALSE)
 
       abline(h=c(0,1))
-      abline(h = coefs[j], lwd = 2, col = scales::alpha("red", 0.7))
+      abline(h = coef[j], lwd = 2, col = scales::alpha("red", 0.7))
       abline(h = mean(tdrift[,j]), lwd = 2, col = scales::alpha("blue", 0.7))
       sp1 <- smooth.spline(tdrift[,j], nknots = 15)
       lines(sp1, lty = 2, col = scales::alpha("blue", 0.5), lwd = 3)
@@ -378,7 +395,10 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
     par(opar)
   }
   else {}
-  close(pb4)
+  tcltk::tkconfigure(l4, text = "Done")
+  tcltk::tkconfigure(pb4, value = 100)
+  tcltk::tcl("update")
+  tcltk::tkdestroy(root)
   message("BDA was completed successfully!")
   return(results)
 }
