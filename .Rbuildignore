@@ -1,0 +1,8 @@
+^\.travis\.yml$
+^\.gitignore$
+^\.RData$
+^\.RHistory$
+^bdrift.Rproj$
+^buildcommand\.R$
+^cran-comments\.Rmd$
+^README\.md$
