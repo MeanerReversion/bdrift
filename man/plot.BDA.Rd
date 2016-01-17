@@ -20,7 +20,7 @@
 \code{plot.BDA} produces three plots for each parameter of the baseline
 model of the corresponding \code{BDA} function. Unless, \code{single} is
 set to \code{TRUE} all three plots for a parameter are displayed in a
-single plot window.
+single plot window. 
 
 The first plot, titled "time drift", displays the drift of the parameter
 across time. In addition to the parameter itself, a 15-knot cubic smooth spline
@@ -47,7 +47,8 @@ of plots which can be comfortably viewed in RStudio, but require some
 preparations in the standard R GUI. Start by executing \code{dev.new()}, which
 opens a graphical device. Next, click the "History" tab and then click
 "Recording" in the drop-down menu. If you run the plotting function now,
-you can jump through the plots using PageUp and PageDown.
+you can jump through the plots using the PageUp and PageDown key on your
+keyboard.
 }
 \examples{
 results <- BDA(data = FFfactors, spec = (VOO~SP500),

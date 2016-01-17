@@ -5,7 +5,9 @@
 ^bdrift.Rproj$
 ^buildcommand\.R$
 ^cran-comments\.Rmd$
+^cran-comments\.md$
 ^README\.md$
+^README\.Rmd$
 ^packs$
 ^legacy$
 ^bdrift$

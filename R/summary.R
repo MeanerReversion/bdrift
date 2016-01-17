@@ -1,12 +1,12 @@
-#' @title Summarize beta-drift analyses
+#' @title Summarize Beta Drift Analyses
 #'
 #' @description
-#' \code{summary.BDA} summarizes the results of beta-drift analyses.
+#' \code{summary.BDA} summarizes the results of beta drift analyses.
 #'
 #' @details
 #' This function prints a detailed summary of the analyses produced by
 #' the \code{\link{BDA}} function.
-#'
+#' 
 #' @param object an object of class \code{BDA}.
 #' @param ... additional parameters.
 #' @method summary BDA

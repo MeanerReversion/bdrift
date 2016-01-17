@@ -1,4 +1,3 @@
 require(roxygen2)
 roxygenize("C:/Users/Markus/Documents/bdrift")
-system("R CMD build C:/Users/Markus/Documents/bdrift")
-system("R CMD check C:/Users/Markus/Documents/bdrift/bdrift")
+devtools::check()

@@ -1,4 +1,4 @@
-#' @title Beta-drift anaylsis
+#' @title Beta Drift Anaylsis
 #'
 #' @description
 #' \code{BDA} performs a range of parameter instability diagnostics
@@ -13,12 +13,13 @@
 #' all rolling parameter estimates and standard errors in the output, so users
 #' can access them using \code{$tdrift} and \code{$tdrift.se} respectively.
 #'
-#' Second, \code{BDA} estimates the baseline model paramters with estimation
-#' windows of varying length (\code{min.hor} to \code{max.hor}). Users can access
+#' Second, \code{BDA} estimates the baseline model parameters with estimation
+#' windows of varying length from (\code{min.hor} to \code{max.hor}). Users can access
 #' the resulting parameter estimates and standard errors using \code{$hdrift} and
 #' \code{$hdrift.se} respectively.
 #'
-#' Third, \code{BDA} checks the baseline model for suspicious observations.
+#' Third, \code{BDA} checks the baseline model for observations that have a noteworthy 
+#' impact on the parameter estimate.
 #'
 #' For further details on the summary statistics output and plotting, please
 #' reference \code{\link{summary.BDA}} and \code{\link{plot.BDA}} respectively.
@@ -144,7 +145,7 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
   ###################################################
   ####              Beta Drift                   ####
   ###################################################
- 
+
   for (i in 1:N)
   {
     tdrift.model <- glm(spec, data = data[i:(horizon+i-1),], family = family, ...)

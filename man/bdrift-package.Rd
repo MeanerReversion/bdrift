@@ -4,7 +4,7 @@
 \name{bdrift-package}
 \alias{bdrift}
 \alias{bdrift-package}
-\title{Analyzing beta drift}
+\title{Analyzing Beta Drift}
 \description{
 bdrift provides tools for analyzing and
 visualizing beta drift in multi-factor models.

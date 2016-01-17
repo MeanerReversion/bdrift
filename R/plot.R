@@ -1,13 +1,13 @@
-#' @title Plot beta-drift analyses
+#' @title Plot Beta Drift Analyses
 #'
 #' @description
 #' \code{plot.BDA} plots results from beta drift analyses.
 #'
 #' @details
 #' \code{plot.BDA} produces three plots for each parameter of the baseline
-#' model of the corresponding \code{BDA} function. Unless, \code{single} is
-#' set to \code{TRUE} all three plots for a parameter are displayed in a
-#' single plot window.
+#' model of the corresponding \code{BDA} function. Unless \code{single} is
+#' set to \code{TRUE}, all three plots for a parameter are displayed in a
+#' single plot window. 
 #'
 #' The first plot, titled "time drift", displays the drift of the parameter
 #' across time. In addition to the parameter itself, a 15-knot cubic smooth spline
@@ -34,10 +34,11 @@
 #' preparations in the standard R GUI. Start by executing \code{dev.new()}, which
 #' opens a graphical device. Next, click the "History" tab and then click
 #' "Recording" in the drop-down menu. If you run the plotting function now,
-#' you can jump through the plots using PageUp and PageDown.
+#' you can jump through the plots using the PageUp and PageDown key on your
+#' keyboard.
 #'
 #' @param x an object of class \code{BDA}.
-#' @param single If \code{TRUE}, grouping of plots by parameters is disabled.
+#' @param single logical. If \code{TRUE}, grouping of plots by parameters is disabled.
 #' @param ... additional parameters.
 #' @method plot BDA
 #' @export

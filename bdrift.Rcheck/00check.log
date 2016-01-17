@@ -1,0 +1,9 @@
+* using log directory 'C:/Users/Markus/Documents/bdrift/bdrift.Rcheck'
+* using R version 3.2.3 (2015-12-10)
+* using platform: x86_64-w64-mingw32 (64-bit)
+* using session charset: ISO8859-1
+* checking for file 'bdrift/DESCRIPTION' ... ERROR
+Benötigtes Feld fehlt oder ist leer:
+  'Author'
+* DONE
+Status: 1 ERROR

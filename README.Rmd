@@ -1,4 +1,20 @@
-[![Travis-CI Build Status](https://travis-ci.org/MeanerReversion/bdrift.svg?branch=master)](https://travis-ci.org/MeanerReversion/bdrift) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/bdrift)](http://cran.r-project.org/package=bdrift) [![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/bdrift)](http://cran.rstudio.com/package=bdrift)
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+[![Travis-CI Build Status](https://travis-ci.org/MeanerReversion/bdrift.svg?branch=master)](https://travis-ci.org/MeanerReversion/bdrift)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/bdrift)](http://cran.r-project.org/package=bdrift)
+[![Downloads from the RStudio CRAN mirror](http://cranlogs.r-pkg.org/badges/bdrift)](http://cran.rstudio.com/package=bdrift)
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
 
 bdrift provides tools for analyzing and visualizing beta drift in multi-factor models.
 

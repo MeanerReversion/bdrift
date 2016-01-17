@@ -36,8 +36,7 @@ FFfactors
 A dataset containing simple daily returns of ExxonMobile,
 BlackRock's Large Cap Core Inv A fund, and Vanguard 500 ETF fund
 as well as all necessary factor data from Kenneth French's data library to estimate
-a five-factor model. The dataset contains data from Sep-09-2010
-until Nov-30-2015.
+a five-factor model. The dataset contains data from Sep-09-2010 until Nov-30-2015.
 }
 \references{
 Fama, E. F., & French, K. R. (1993).

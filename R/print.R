@@ -1,12 +1,12 @@
-#' @title Print beta-drift anaylses
+#' @title Print Beta Drift Anaylses
 #'
 #' @description
-#' \code{print.BDA} prints beta-drift anaylses.
+#' \code{print.BDA} prints beta drift anaylses.
 #'
 #' @details
 #' This function prints simplified summary statistics of analyses
 #' created by the \code{\link{BDA}} function.
-#'
+#' 
 #' @param x an object of class \code{BDA}.
 #' @param ... additional parameters.
 #' @method print BDA

@@ -5,3 +5,5 @@ buildcommand.R
 .Rbuildignore
 cran-comments.Rmd
 bdrift.Rproj
+legacy
+bdrift
