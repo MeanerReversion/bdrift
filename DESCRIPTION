@@ -1,7 +1,7 @@
 Package: bdrift
 Type: Package
 Title: Beta Drift Analysis
-Version: 1.1.4
+Version: 1.1.5
 Date: 2016-01-17
 Authors@R: person("Markus Peter", "Auer", role = c("aut", "cre"),
                      email = "mp.auer@meanerreversion.com")

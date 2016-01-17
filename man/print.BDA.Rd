@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.R
 \name{print.BDA}
 \alias{print.BDA}
-\title{Print beta-drift anaylses}
+\title{Print Beta Drift Anaylses}
 \usage{
 \method{print}{BDA}(x, ...)
 }
@@ -12,7 +12,7 @@
 \item{...}{additional parameters.}
 }
 \description{
-\code{print.BDA} prints beta-drift anaylses.
+\code{print.BDA} prints beta drift anaylses.
 }
 \details{
 This function prints simplified summary statistics of analyses

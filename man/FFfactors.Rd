@@ -3,7 +3,7 @@
 \docType{data}
 \name{FFfactors}
 \alias{FFfactors}
-\title{Dataset to fit multi-factor models to various return samples}
+\title{Dataset to Estimate Multi-Factor Models for Return Samples}
 \format{A xts object with 1316 rows and 10 variables. The variables
 are as follows:
 \describe{

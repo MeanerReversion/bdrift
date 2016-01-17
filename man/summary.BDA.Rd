@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.R
 \name{summary.BDA}
 \alias{summary.BDA}
-\title{Summarize beta-drift analyses}
+\title{Summarize Beta Drift Analyses}
 \usage{
 \method{summary}{BDA}(object, ...)
 }
@@ -12,7 +12,7 @@
 \item{...}{additional parameters.}
 }
 \description{
-\code{summary.BDA} summarizes the results of beta-drift analyses.
+\code{summary.BDA} summarizes the results of beta drift analyses.
 }
 \details{
 This function prints a detailed summary of the analyses produced by

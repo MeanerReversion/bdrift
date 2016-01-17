@@ -2,14 +2,14 @@
 % Please edit documentation in R/plot.R
 \name{plot.BDA}
 \alias{plot.BDA}
-\title{Plot beta-drift analyses}
+\title{Plot Beta Drift Analyses}
 \usage{
 \method{plot}{BDA}(x, single = FALSE, ...)
 }
 \arguments{
 \item{x}{an object of class \code{BDA}.}
 
-\item{single}{If \code{TRUE}, grouping of plots by parameters is disabled.}
+\item{single}{logical. If \code{TRUE}, grouping of plots by parameters is disabled.}
 
 \item{...}{additional parameters.}
 }
@@ -18,8 +18,8 @@
 }
 \details{
 \code{plot.BDA} produces three plots for each parameter of the baseline
-model of the corresponding \code{BDA} function. Unless, \code{single} is
-set to \code{TRUE} all three plots for a parameter are displayed in a
+model of the corresponding \code{BDA} function. Unless \code{single} is
+set to \code{TRUE}, all three plots for a parameter are displayed in a
 single plot window. 
 
 The first plot, titled "time drift", displays the drift of the parameter
