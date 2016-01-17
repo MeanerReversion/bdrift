@@ -6,3 +6,6 @@
 ^buildcommand\.R$
 ^cran-comments\.Rmd$
 ^README\.md$
+^packs$
+^legacy$
+^bdrift$

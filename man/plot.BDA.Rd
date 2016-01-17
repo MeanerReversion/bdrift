@@ -44,7 +44,7 @@ as implied by the baseline model.
 \code{IMPORTANT NOTE}: This package was developed with the GUI
 of RStudio in mind. The plotting function creates a potentially large number
 of plots which can be comfortably viewed in RStudio, but require some
-preparations in the standard R GUI. Start by executing \code{x11()}, which
+preparations in the standard R GUI. Start by executing \code{dev.new()}, which
 opens a graphical device. Next, click the "History" tab and then click
 "Recording" in the drop-down menu. If you run the plotting function now,
 you can jump through the plots using PageUp and PageDown.

@@ -1,3 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
+buildcommand.R
+.Rbuildignore
+cran-comments.Rmd
+bdrift.Rproj
