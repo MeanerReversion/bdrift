@@ -1,11 +1,10 @@
 Package: bdrift
 Type: Package
 Title: Beta drift analysis
-Version: 1.06.3
+Version: 1.1.3
 Date: 2016-01-16
 Authors@R: person("Markus Peter", "Auer", role = c("aut", "cre"),
                      email = "mp.auer@meanerreversion.com")
-Author: Markus Peter Auer
 Maintainer: Markus Peter Auer <mp.auer@meanerreversion.com>
 Description: This package contains the BDA() function that performs a beta drift
     analysis, typically for multi-factor asset pricing models. The BDA() function
@@ -16,7 +15,8 @@ Description: This package contains the BDA() function that performs a beta drift
     could be interpreted as a style drift or lack of management skill in the case of
     passive funds.
 Depends:
-    R (>= 3.1.0),
+    R (>= 3.2.3),
+    stats,
     xts,
     zoo
 Imports:
