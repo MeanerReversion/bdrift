@@ -90,7 +90,6 @@ plot.BDA <- function(x, single = FALSE, ...){
     ###################################################
     ####            Horizon Plot                   ####
     ###################################################
-    if(single == TRUE){dev.new()}
     plot(x$hdrift[,j], type = "l", xaxt="n", ylab = "estimated parameter",
          main="horizon drift", xlab="estimation window size ",
          ylim = c(min(x$hdrift[,j]-qt(0.975, df = min.hor:max.hor)*x$hdrift.se[,j]),
@@ -114,7 +113,6 @@ plot.BDA <- function(x, single = FALSE, ...){
     ###################################################
     ####           Jackknife Plot                  ####
     ###################################################
-    if(single == TRUE){dev.new()}
     plot(x$jackknife$coef[,j], type = "h",
          xlab = "index of omitted observations", ylim = c(-se[j],se[j]),
          ylab = "estimated deviance", main = "jackknife", ...)
