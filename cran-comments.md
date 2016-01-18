@@ -1,3 +1,16 @@
+Resubmission
+------------
+
+This is a resubmission. In this version I have:
+
+-   Updated the DESCRIPTION file to comply with CRAN policies.
+
+-   Reduced the complexity of examples, thus decreasing the time needed
+    to run them below 5s. More complex examples are available in the
+    reference manual, but won't run when example() is called.
+
+-   Fixed a minor bug.
+
 Test environments
 -----------------
 
