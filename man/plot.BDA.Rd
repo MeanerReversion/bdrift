@@ -51,9 +51,24 @@ you can jump through the plots using the PageUp and PageDown key on your
 keyboard.
 }
 \examples{
+\dontrun{
+###################################################
+####             Full example                  ####
+###################################################
+
 results <- BDA(data = FFfactors, spec = (VOO~SP500),
-horizon = 250, doplot = FALSE)
+               horizon = 250, doplot = FALSE)
 plot(results)
+}
+
+###################################################
+####        CRAN-compatible example            ####
+###################################################
+
+results <- BDA(data = FFfactors[nrow(FFfactors):(nrow(FFfactors)-300),], 
+               spec = (VOO~SP500),horizon = 250, doplot = FALSE)
+plot(results)
+message("NOTE: This is a shortened example. Reference the manual for more complex examples")
 }
 \author{
 Markus Peter Auer <mp.auer@meanerreversion.com>

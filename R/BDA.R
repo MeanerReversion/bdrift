@@ -61,26 +61,39 @@
 #'
 #' @author Markus Peter Auer <mp.auer@@meanerreversion.com>
 #' @examples
+#' \dontrun{
 #' ###################################################
 #' ####   3-Factor Stock Example: ExxonMobil      ####
 #' ###################################################
-#'
-#' results1 <- BDA(data = FFfactors, spec = (XOM~Mkt.RF + SMB + HML),
-#' horizon = 250, doplot = TRUE)
-#'
+#' 
+#' results1 <- BDA(data = FFfactors, 
+#'                 spec = (XOM~Mkt.RF + SMB + HML),
+#'                 horizon = 250, doplot = TRUE)
+#' 
 #' ###################################################
 #' #### 5-Factor Active Fund Example: BlackRock   ####
 #' ###################################################
-#'
-#' results2 <- BDA(data = FFfactors, spec = (MDLRX~Mkt.RF + SMB + HML + RMW + CMA),
-#' horizon = 250, doplot = TRUE)
-#'
+#' 
+#' results2 <- BDA(data = FFfactors, 
+#'                 spec = (MDLRX~Mkt.RF + SMB + HML + RMW + CMA),
+#'                 horizon = 250, doplot = TRUE)
+#' 
 #' ###################################################
 #' ####   1-Factor Index Fund Example: Vanguard   ####
 #' ###################################################
-#'
+#' 
 #' results3 <- BDA(data = FFfactors, spec = (VOO~SP500),
-#' horizon = 250, doplot = TRUE)
+#'                 horizon = 250, doplot = FALSE)
+#' }
+#' ###################################################
+#' ####        CRAN-compatible example            ####
+#' ###################################################
+#' 
+#' results <- BDA(data = FFfactors[nrow(FFfactors):(nrow(FFfactors)-300),], 
+#'                spec = (VOO~SP500),horizon = 250, doplot = TRUE)
+#' message("NOTE: This is a shortened example. Reference the manual for more complex examples")
+#' 
+
 
 BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
                 min.hor = 21, max.hor = 750, family = gaussian,
@@ -89,7 +102,6 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
   N <- nrow(data)-horizon+1
   ind <- zoo::index(data)[horizon:(horizon+N-1)]
   data <- as.data.frame(data)
-  DF <- data
   data <- data[rev(rownames(data)),]
   base.model <- glm(spec, data=data[1:horizon,], family = family, ...)
   k <- length(base.model$coefficients)
@@ -97,7 +109,7 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
   tdrift.se <- matrix(0, nrow=N, ncol = k)
   min.hor <- ifelse(min.hor>nrow(data), nrow(data), min.hor)
   max.hor <- ifelse(max.hor<horizon, horizon+1, max.hor)
-  max.hor <- ifelse(max.hor>nrow(data), nrow(data), max.hor)
+  max.hor <- ifelse(max.hor>nrow(data), nrow(data)-1, max.hor)
   hdrift <- matrix(0, nrow = max.hor - min.hor+1, ncol = k)
   hdrift.se <- matrix(0, nrow = max.hor - min.hor+1, ncol = k)
   coef <- base.model$coef[1:k]
@@ -145,7 +157,6 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
   ###################################################
   ####              Beta Drift                   ####
   ###################################################
-
   for (i in 1:N)
   {
     tdrift.model <- glm(spec, data = data[i:(horizon+i-1),], family = family, ...)

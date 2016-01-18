@@ -75,26 +75,38 @@ is of class \code{xts}. However, \code{BDA} was developed with large datasets
 in mind, so that very small datasets might produce errors or non-sensical results.
 }
 \examples{
+\dontrun{
 ###################################################
 ####   3-Factor Stock Example: ExxonMobil      ####
 ###################################################
 
-results1 <- BDA(data = FFfactors, spec = (XOM~Mkt.RF + SMB + HML),
-horizon = 250, doplot = TRUE)
+results1 <- BDA(data = FFfactors, 
+                spec = (XOM~Mkt.RF + SMB + HML),
+                horizon = 250, doplot = TRUE)
 
 ###################################################
 #### 5-Factor Active Fund Example: BlackRock   ####
 ###################################################
 
-results2 <- BDA(data = FFfactors, spec = (MDLRX~Mkt.RF + SMB + HML + RMW + CMA),
-horizon = 250, doplot = TRUE)
+results2 <- BDA(data = FFfactors, 
+                spec = (MDLRX~Mkt.RF + SMB + HML + RMW + CMA),
+                horizon = 250, doplot = TRUE)
 
 ###################################################
 ####   1-Factor Index Fund Example: Vanguard   ####
 ###################################################
 
 results3 <- BDA(data = FFfactors, spec = (VOO~SP500),
-horizon = 250, doplot = TRUE)
+                horizon = 250, doplot = FALSE)
+}
+###################################################
+####        CRAN-compatible example            ####
+###################################################
+
+results <- BDA(data = FFfactors[nrow(FFfactors):(nrow(FFfactors)-300),], 
+               spec = (VOO~SP500),horizon = 250, doplot = TRUE)
+message("NOTE: This is a shortened example. Reference the manual for more complex examples")
+
 }
 \author{
 Markus Peter Auer <mp.auer@meanerreversion.com>

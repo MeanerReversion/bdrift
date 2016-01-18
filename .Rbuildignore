@@ -11,3 +11,5 @@
 ^packs$
 ^legacy$
 ^bdrift$
+^.*\.Rproj$
+^\.Rproj\.user$

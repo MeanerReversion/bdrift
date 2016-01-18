@@ -19,9 +19,24 @@ This function prints simplified summary statistics of analyses
 created by the \code{\link{BDA}} function.
 }
 \examples{
+\dontrun{
+###################################################
+####             Full example                  ####
+###################################################
+
 results <- BDA(data = FFfactors, spec = (VOO~SP500),
-horizon = 250, doplot = FALSE)
+               horizon = 250, doplot = TRUE)
 print(results)
+}
+
+###################################################
+####        CRAN-compatible example            ####
+###################################################
+
+results <- BDA(data = FFfactors[nrow(FFfactors):(nrow(FFfactors)-300),], 
+               spec = (VOO~SP500),horizon = 250, doplot = FALSE)
+print(results)
+message("NOTE: This is a shortened example. Reference the manual for more complex examples")
 }
 \author{
 Markus Peter Auer <mp.auer@meanerreversion.com>
