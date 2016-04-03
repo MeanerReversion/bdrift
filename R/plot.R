@@ -90,9 +90,10 @@ plot.BDA <- function(x, single = FALSE, ...){
          labels=c(start(x$tdrift[,j]), end(x$tdrift[,j])))
     polygon(c(zoo::index(as.numeric(x$tdrift[,j])),
               rev(zoo::index(as.numeric(x$tdrift[,j])))),
-            c(c(rep((coefs[j]+qt(0.975, df = horizon)*se[j]),
+            c(c(rep((coefs[j]+qt(0.975, df = df.residual(x$base.model))*se[j]),
                     length(zoo::index(as.numeric(x$tdrift[,j]))))),
-              c(rep((coefs[j]-qt(0.975, df = horizon)*se[j]),length(zoo::index(as.numeric(x$tdrift[,j])))))),
+              c(rep((coefs[j]-qt(0.975, df = df.residual(x$base.model))*se[j]),
+                    length(zoo::index(as.numeric(x$tdrift[,j])))))),
             col = scales::alpha("red", 0.15), border = FALSE)
 
     abline(h=c(0,1))
@@ -108,8 +109,9 @@ plot.BDA <- function(x, single = FALSE, ...){
     ###################################################
     plot(x$hdrift[,j], type = "l", xaxt="n", ylab = "estimated parameter",
          main="horizon drift", xlab="estimation window size ",
-         ylim = c(min(x$hdrift[,j]-qt(0.975, df = min.hor:max.hor)*x$hdrift.se[,j]),
-                  max(x$hdrift[,j]+qt(0.975, df = min.hor:max.hor)*x$hdrift.se[,j])), ...)
+         ylim = c(min(x$hdrift[,j]-qt(0.975, df = (min.hor:max.hor - length(coef(x$base.model))))*x$hdrift.se[,j]),
+                  max(x$hdrift[,j]+qt(0.975, df = (min.hor:max.hor - length(coef(x$base.model))))*x$hdrift.se[,j])), 
+         ...)
     axis(1, at=seq(from = 1,
                    to = max.hor-min.hor,
                    by = round((max.hor-min.hor)/10)),
@@ -120,7 +122,7 @@ plot.BDA <- function(x, single = FALSE, ...){
             c((x$hdrift[,j]+qt(0.975, df = min.hor:max.hor)*x$hdrift.se[,j]),
               rev(x$hdrift[,j]-qt(0.975, df = min.hor:max.hor)*x$hdrift.se[,j])),
             col = scales::alpha("blue", 0.15), border = FALSE)
-    abline(v=horizon, col = scales::alpha("red", 0.5), lwd = 2)
+    abline(v=(horizon-min.hor), col = scales::alpha("red", 0.5), lwd = 2)
     sp2 <- smooth.spline(x$hdrift[,j], nknots =5)
     lines(sp2, lty = 2, col = scales::alpha("blue", 0.5), lwd = 3)
     if (single == TRUE){

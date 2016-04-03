@@ -251,9 +251,9 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
     base.p[,z] <- dt(base.para[,z]/base.se[,z],
                      df = horizon -k)
     base.lower[,z] <- base.para[,z] -
-      qt(0.975, df = length(base.para[,z]))*base.se[,z]
+      qt(0.975, df = df.residual(base.model))*base.se[,z]
     base.upper[,z] <- base.para[,z] +
-      qt(0.975, df = length(base.para[,z]))*base.se[,z]
+      qt(0.975, df = df.residual(base.model))*base.se[,z]
     tdrift.mean[,z] <- mean(tdrift[,z])
     tdrift.median[,z] <- median(tdrift[,z])
     tdrift.sd[,z] <- sd(tdrift[,z])
@@ -350,9 +350,9 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
            labels=c(start(tdrift[,j]), end(tdrift[,j])))
       polygon(c(zoo::index(as.numeric(tdrift[,j])),
                 rev(zoo::index(as.numeric(tdrift[,j])))),
-              c(c(rep((coef[j]+qt(0.975, df = horizon)*se[j]),
+              c(c(rep((coef[j]+qt(0.975, df = df.residual(base.model))*se[j]),
                       length(zoo::index(as.numeric(tdrift[,j]))))),
-                c(rep((coef[j]-qt(0.975, df = horizon)*se[j]),
+                c(rep((coef[j]-qt(0.975, df = df.residual(base.model))*se[j]),
                       length(zoo::index(as.numeric(tdrift[,j])))))),
               col = scales::alpha("red", 0.15), border = FALSE)
 
@@ -367,8 +367,8 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
       ###################################################
       plot(hdrift[,j], type = "l", xaxt="n", ylab = "estimated parameter",
            main="horizon drift", xlab="estimation window size ",
-           ylim = c(min(hdrift[,j]-qt(0.975, df = min.hor:max.hor)*hdrift.se[,j]),
-                    max(hdrift[,j]+qt(0.975, df = min.hor:max.hor)*hdrift.se[,j])))
+           ylim = c(min(hdrift[,j]-qt(0.975, df = (min.hor:max.hor - length(coef(base.model))))*hdrift.se[,j]),
+                    max(hdrift[,j]+qt(0.975, df = (min.hor:max.hor - length(coef(base.model))))*hdrift.se[,j])))
       axis(1, at=seq(from = 1,
                      to = max.hor-min.hor,
                      by = round((max.hor-min.hor)/10)),
@@ -379,7 +379,7 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
               c((hdrift[,j]+qt(0.975, df = min.hor:max.hor)*hdrift.se[,j]),
                 rev(hdrift[,j]-qt(0.975, df = min.hor:max.hor)*hdrift.se[,j])),
               col = scales::alpha("blue", 0.15), border = FALSE)
-      abline(v=horizon, col = scales::alpha("red", 0.5), lwd = 2)
+      abline(v=(horizon-min.hor), col = scales::alpha("red", 0.5), lwd = 2)
       sp2 <- smooth.spline(hdrift[,j], nknots =5)
       lines(sp2, lty = 2, col = scales::alpha("blue", 0.5), lwd = 3)
 
