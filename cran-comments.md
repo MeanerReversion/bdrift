@@ -1,22 +1,23 @@
-Resubmission
-------------
+Version 1.2.2 Submission
+------------------------
 
-This is a resubmission. In this version I have:
+In this version I have:
 
--   Updated the DESCRIPTION file to comply with CRAN policies.
+-   Included the BDA.loader convenience function
 
--   Reduced the complexity of examples, thus decreasing the time needed
-    to run them below 5s. More complex examples are available in the
-    reference manual, but won't run when example() is called.
+-   Deleted the progress bar from BDA function to ensure usability on
+    virtual machines without display
 
--   Fixed a minor bug.
+-   Fixed a bug in the horizon plot
+
+-   Corrected the calculation of confidence intervals
 
 Test environments
 -----------------
 
--   local Win 8.1 install, R 3.2.3
--   Ubuntu 12.04.5 LTS (on travis-ci), R 3.2.3
--   win-builder, R.3.3.0 (R-Devel)
+-   local Win 10 install, R 3.2.4
+-   Ubuntu 12.04.5 LTS (on travis-ci), R 3.2.4
+-   win-builder, R 3.3.0 (R-Devel)
 
 R CMD check results
 -------------------

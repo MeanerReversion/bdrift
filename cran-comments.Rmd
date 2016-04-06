@@ -17,7 +17,7 @@ In this version I have:
 ## Test environments
 * local Win 10 install, R 3.2.4
 * Ubuntu 12.04.5 LTS (on travis-ci), R 3.2.4
-* win-builder, R.3.3.0 (R-Devel)
+* win-builder, R 3.3.0 (R-Devel)
 
 
 ## R CMD check results
