@@ -1,0 +1,15 @@
+---
+output:
+  md_document:
+    variant: markdown_strict
+---
+## Version 1.2.2 News
+In this version I have:
+
+* Included the BDA.loader convenience function
+
+* Deleted the progress bar from BDA function to ensure usability on virtual machines without display
+
+* Fixed a bug in the horizon plot
+
+* Corrected the calculation of confidence intervals

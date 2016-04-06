@@ -16,7 +16,7 @@ enter as character.}
 \item{xbench}{ticker symbol of an external benchmark, 
 \code{NA} by default.}
 
-\item{type}{type of returns to calculate (\code{"log"} 
+\item{type}{type of returns to be calculated (\code{"log"} 
 or \code{"arithmetic"}). By default, log returns are used.}
 
 \item{...}{aditional commands passed to the \code{getSymbols} 

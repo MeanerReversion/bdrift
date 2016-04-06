@@ -1,5 +1,6 @@
 require(roxygen2)
 roxygenize("C:/Users/Markus/Documents/bdrift")
 devtools::check()
+devtools::revdep_check()
 devtools::build("bdrift", path = "C:/Users/Markus/Documents")
 system("R CMD Rd2pdf C:/Users/Markus/Documents/bdrift")

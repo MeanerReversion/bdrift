@@ -6,6 +6,8 @@
 ^buildcommand\.R$
 ^cran-comments\.Rmd$
 ^cran-comments\.md$
+^NEWS\.Rmd$
+^NEWS\.md$
 ^README\.md$
 ^README\.Rmd$
 ^packs$

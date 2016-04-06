@@ -116,44 +116,6 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
   se <- sqrt(diag(vcov(base.model)))[1:k]
   header <- c(names(coef[1:k]))
   
-  root <- tcltk::tktoplevel()
-  tcltk::tktitle(root) <- "BDA function progress"
-  l1 <- tcltk2::tk2label(root,"Function Progress...")
-  pb1 <- tcltk2::tk2progress(root, length = 600)
-  tcltk::tkconfigure(pb1, value=0, maximum=N)
-  
-  l2 <- tcltk2::tk2label(root, "Function Progress...")
-  pb2 <- tcltk2::tk2progress(root, length = 600)
-  tcltk::tkconfigure(pb2, value=0, maximum = max.hor-min.hor+1)
-  
-  l3 <- tcltk2::tk2label(root, "Function Progress...")
-  pb3 <- tcltk2::tk2progress(root, length = 600)
-  tcltk::tkconfigure(pb3, value=0, maximum = 100)
-  
-  l4 <- tcltk2::tk2label(root, "Function Progress...")
-  pb4 <- tcltk2::tk2progress(root, length = 600)
-  tcltk::tkconfigure(pb4, value=0, maximum = 100)
-  
-  tcltk::tkpack(l1)
-  tcltk::tkpack(pb1)
-  tcltk::tkpack(l2)
-  tcltk::tkpack(pb2)
-  tcltk::tkpack(l3)
-  tcltk::tkpack(pb3)
-  tcltk::tkpack(l4)
-  tcltk::tkpack(pb4)
-  
-  tcltk::tcl("update")
-  tcltk::tkconfigure(l1, text = paste("Time drift estimation 0% done"))
-  tcltk::tkconfigure(pb1, value = 0)
-  tcltk::tkconfigure(l2, text = paste("Horizon drift estimation 0% done"))
-  tcltk::tkconfigure(pb2, value = 0)
-  tcltk::tkconfigure(l3, text = paste("Jackknife procedure 0% done"))
-  tcltk::tkconfigure(pb3, value = 0)
-  tcltk::tkconfigure(l4, text = paste("Finalizing procedures"))
-  tcltk::tkconfigure(pb4, value = 0)
-  tcltk::tcl("update")
-
   ###################################################
   ####              Beta Drift                   ####
   ###################################################
@@ -162,9 +124,6 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
     tdrift.model <- glm(spec, data = data[i:(horizon+i-1),], family = family, ...)
     tdrift[i,] <- tdrift.model$coef[1:k]
     tdrift.se[i,] <- sqrt(diag(vcov(tdrift.model)))[1:k]
-    tcltk::tkconfigure(l1, text = paste("Time drift estimation ",round(i/N*100, 0), "% done"))
-    tcltk::tkconfigure(pb1, value = i)
-    tcltk::tcl("update")
   }
   colnames(tdrift) <- header[1:k]
   tdrift <- as.data.frame(tdrift)
@@ -184,12 +143,6 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
                                     family= family, ...)$coef[1:k]
     hdrift.se[(m +1 - min.hor),] <- sqrt(diag(vcov(glm(spec, data = data[1:m,],
                                                      family= family, ...))))[1:k]
-    tcltk::tkconfigure(l2, 
-                       text = paste("Horizon drift estimation ", 
-                                    round((m-min.hor+1)/(max.hor-min.hor+1)*100, 0),
-                                    "% done"))
-    tcltk::tkconfigure(pb2, value = m)
-    tcltk::tcl("update")
   }
   rownames(hdrift) <- c(min.hor:max.hor)
   colnames(hdrift) <- header[1:k]
@@ -199,24 +152,11 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
   ###################################################
   ####                Jackknife                  ####
   ###################################################
-  tcltk::tkconfigure(l3, text = paste("Jackknife procedure ",0, "% done"))
-  tcltk::tkconfigure(pb3, value = 0)
-  tcltk::tcl("update")
   jackknife <- lm.influence(base.model)
-  tcltk::tkconfigure(l3, text = paste("Jackknife procedure ",100, "% done"))
-  tcltk::tkconfigure(pb3, value = 100)
-  tcltk::tcl("update")
   
   ###################################################
   ####            Summary Statistics             ####
   ###################################################
-  tcltk::tkconfigure(l4, text = "Preparing Output")
-  tcltk::tkconfigure(pb4, value = 0)
-  tcltk::tcl("update")
-  tcltk::tkconfigure(l4, text = "Preparing summary stats")
-  tcltk::tkconfigure(pb4, value = 30)
-  tcltk::tcl("update")
-  
   base.para <- matrix(0, nrow = 1, ncol = k)
   base.coef <- matrix(0, nrow = 1, ncol = k)
   base.se <- matrix(0, nrow = 1, ncol = k)
@@ -316,9 +256,6 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
   ###################################################
   ####                Outputs                    ####
   ###################################################
-  tcltk::tkconfigure(l4, text = "Compiling output")
-  tcltk::tkconfigure(pb4, value = 40)
-  tcltk::tcl("update")
   results <- list(CALL = match.call(),
                   base.model = base.model,
                   tdrift = tdrift,
@@ -333,9 +270,6 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
   ####                Plotting                   ####
   ###################################################
   if (doplot == TRUE) {
-    tcltk::tkconfigure(l4, text = "Plotting")
-    tcltk::tkconfigure(pb4, value = 50)
-    tcltk::tcl("update")
     opar <- par(no.readonly = TRUE)
     for (j in (1:k))
     {
@@ -407,10 +341,6 @@ BDA <- function(data, spec, horizon = round(nrow(data)*0.5)-1,
     par(opar)
   }
   else {}
-  tcltk::tkconfigure(l4, text = "Done")
-  tcltk::tkconfigure(pb4, value = 100)
-  tcltk::tcl("update")
-  tcltk::tkdestroy(root)
   message("BDA was completed successfully!")
   return(results)
 }

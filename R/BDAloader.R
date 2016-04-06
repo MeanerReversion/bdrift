@@ -18,7 +18,7 @@
 #' (\code{"daily"}, \code{"monthly"}, or \code{"yearly"})
 #' @param xbench ticker symbol of an external benchmark, 
 #' \code{NA} by default.
-#' @param type type of returns to calculate (\code{"log"} 
+#' @param type type of returns to be calculated (\code{"log"} 
 #' or \code{"arithmetic"}). By default, log returns are used.
 #' @param ... aditional commands passed to the \code{getSymbols} 
 #' function.
